@@ -1,0 +1,25 @@
+version: '3'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - postgres_fm
+    environment:
+      PORT: 80
+      DATASOURCE_URL: jdbc:postgresql://postgres_fm:5432/platzi-tweets-db?user=exampleuser&password=123456&sslmode=require
+      DATASOURCE_USERNAME: exampleuser
+      DATASOURCE_PASSWORD: 123456
+      API_SECURITY_KEY: kHGjyfUYygbkj12@JKHGjsrfguydewqgbdfsiodu23!@
+  postgres_fm:
+    image: postgres:12.6-alpine
+    container_name: postgres_fm
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: 'platzi-tweets-db'
+      POSTGRES_USER: 'exampleuser'
+      POSTGRES_PASSWORD: '123456'
